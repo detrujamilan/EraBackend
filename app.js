@@ -26,10 +26,6 @@ app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/stories', storieRoute);
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
-app.use(()=>{
-    console.log('Server running...');
-    console.log(`API is at http://localhost:${PORT}/api`);
-})
 
 // Start server
 const PORT = process.env.PORT || 5000;

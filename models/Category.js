@@ -5,17 +5,17 @@ const categorySchema = mongoose.Schema(
         name: {
             type: String,
             required: true,
-            unique: true, // Ensures category names are unique
+            unique: true,
         },
         description: {
             type: String,
         },
         image: {
-            type: String, // Filename of the uploaded image
+            type: String,
         },
     },
     {
-        timestamps: true, // Adds `createdAt` and `updatedAt` fields
+        timestamps: true,
     }
 );
 

@@ -1,24 +1,29 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
-// Create a reusable transporter object using SMTP transport
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // Use Gmail as the email service
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    secure: true,
     auth: {
-        user: process.env.EMAIL_USER,  // Replace with your email address
-        pass: process.env.EMAIL_PASS,  // Replace with your email password (use environment variables for security)
+        user: "milandetruja2@gmail.com", //Sender Email Address
+        pass: "apnn egyq gfzm zcyl", //App Password for gmail
     },
 });
 
-// Send email function
-const sendEmail = (to, subject, text) => {
+const sendEmail = (to,otp) => {
     const mailOptions = {
-        from: process.env.EMAIL_USER, // Sender's email address (should match the email you set up)
-        to: to, // Receiver's email address
-        subject: subject, // Subject of the email
-        text: text, // Email content
+        from: {
+            name: 'EraBook',
+            address: "milandetruja2@gmail.com", //Replace with your email address
+        },
+        to: to,
+        subject: "EraBook OTP Verification",
+        text: `Your OTP for EraBook verification is: ${otp}`,
+        html: `<p>Your OTP for EraBook verification is: <b>${otp}</b></p>`,
     };
 
     return transporter.sendMail(mailOptions);
 };
 
-module.exports = { sendEmail };
+module.exports = {sendEmail};

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Category = require('../models/Category');
 const Story = require('../models/Story');
 const upload = require('../middleware/multerConfig');
-const { protect } = require('../middleware/authMiddleware');
+const {protect} = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ router.get('/', protect, async (req, res) => {
         const categories = await Category.find();
         res.status(200).json(categories);
     } catch (error) {
-        res.status(500).json({ message: 'Failed to fetch categories', error: error.message });
+        res.status(500).json({message: 'Failed to fetch categories', error: error.message});
     }
 });
 
@@ -28,11 +28,11 @@ router.get('/', protect, async (req, res) => {
  */
 router.post('/', protect, upload.single('image'), async (req, res) => {
     try {
-        const { name, description } = req.body;
+        const {name, description} = req.body;
 
         // Validate the presence of an image
         if (!req.file) {
-            return res.status(400).json({ message: 'Image file is required' });
+            return res.status(400).json({message: 'Image file is required'});
         }
 
         const newCategory = new Category({
@@ -63,23 +63,23 @@ router.post('/', protect, upload.single('image'), async (req, res) => {
  */
 router.get('/:categoryId/stories', protect, async (req, res) => {
     try {
-        const { categoryId } = req.params;
+        const {categoryId} = req.params;
 
         // Validate the category ID
         if (!mongoose.Types.ObjectId.isValid(categoryId)) {
-            return res.status(400).json({ message: 'Invalid category ID' });
+            return res.status(400).json({message: 'Invalid category ID'});
         }
 
         // Check if the category exists
         const category = await Category.findById(categoryId);
         if (!category) {
-            return res.status(404).json({ message: 'Category not found' });
+            return res.status(404).json({message: 'Category not found'});
         }
 
         // Fetch stories for the category
-        const stories = await Story.find({ category: categoryId }).select('name image rating');
+        const stories = await Story.find({category: categoryId}).select('name image rating');
         if (!stories.length) {
-            return res.status(404).json({ message: 'No stories found for this category' });
+            return res.status(404).json({message: 'No stories found for this category'});
         }
 
         res.status(200).json({
